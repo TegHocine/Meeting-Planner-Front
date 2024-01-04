@@ -15,6 +15,4 @@ import { RouterOutlet } from '@angular/router';
     <router-outlet></router-outlet>
   `,
 })
-export class AppComponent {
-  title = 'meetingPlanner';
-}
+export class AppComponent {}

@@ -3,6 +3,8 @@
   margin-inline: auto;
   padding-inline: 2rem;
   padding-block: 6rem;
+  display: grid;
+  gap: 1rem;
 }
 
 .example-container mat-form-field {
@@ -10,11 +12,10 @@
 }
 
 .example-form-fields {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  place-items: center;
 }
 
 .button-form-data-container {
@@ -22,4 +23,9 @@
   justify-content: flex-end;
   align-items: center;
   text-transform: uppercase;
+}
+
+.room-table-container {
+  overflow: scroll;
+  padding: 2rem;
 }

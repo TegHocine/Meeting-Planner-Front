@@ -1,4 +1,6 @@
+import { RoomTableComponent } from '@/components/room-table/room-table.component';
 import { MeetingService } from '@/service/meeting.service';
+import { MeetingType } from '@/types/meetingType';
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import {
@@ -30,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatNativeDateModule,
     MatButtonModule,
     JsonPipe,
+    RoomTableComponent,
   ],
   providers: [MeetingService],
   templateUrl: './meeting.component.html',
@@ -45,11 +48,11 @@ export class MeetingComponent {
     type: new FormControl('', Validators.required),
   });
 
-  data: any = '';
+  data: MeetingType | null = null;
 
   formatDate(date: Date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
@@ -63,8 +66,6 @@ export class MeetingComponent {
       nbrPeople: this.formData.value.nbrPeople ?? 0,
       type: this.formData.value.type ?? '',
     };
-    console.log(this.formData.errors, formatedData);
-    if (this.formData.errors) return;
 
     this.meetingService.addMeeting(formatedData).subscribe((resp) => {
       console.log(resp);
