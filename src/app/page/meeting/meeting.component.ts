@@ -41,11 +41,11 @@ import { MatSelectModule } from '@angular/material/select';
 export class MeetingComponent {
   constructor(private meetingService: MeetingService) {}
   formData = new FormGroup({
-    startTime: new FormControl('', Validators.required),
-    endTime: new FormControl('', Validators.required),
-    date: new FormControl(new Date(), Validators.required),
-    nbrPeople: new FormControl(0, Validators.required),
-    type: new FormControl('', Validators.required),
+    startTime: new FormControl('', [Validators.required]),
+    endTime: new FormControl('', [Validators.required]),
+    date: new FormControl(new Date(), [Validators.required]),
+    nbrPeople: new FormControl(0, [Validators.required, Validators.min(2)]),
+    type: new FormControl('', [Validators.required]),
   });
 
   data: MeetingType | null = null;
@@ -58,14 +58,41 @@ export class MeetingComponent {
     return `${year}-${month}-${day}`;
   }
 
+  get startTime() {
+    return this.formData.get('startTime');
+  }
+
+  get endTime() {
+    return this.formData.get('endTime');
+  }
+
+  get date() {
+    return this.formData.get('date');
+  }
+
+  get nbrPeople() {
+    return this.formData.get('nbrPeople');
+  }
+
+  get type() {
+    return this.formData.get('type');
+  }
+
   submitData() {
     const formatedData = {
-      startTime: this.formData.value.startTime ?? '',
-      endTime: this.formData.value.endTime ?? '',
-      date: this.formatDate(this.formData.value.date ?? new Date()),
-      nbrPeople: this.formData.value.nbrPeople ?? 0,
-      type: this.formData.value.type ?? '',
+      startTime: this.startTime?.value ?? '',
+      endTime: this.endTime?.value ?? '',
+      date: this.formatDate(this.date?.value ?? new Date()),
+      nbrPeople: this.nbrPeople?.value ?? 0,
+      type: this.type?.value ?? '',
     };
+
+    console.log(this.startTime?.value);
+
+    if (this.formData.invalid) {
+      console.log('Form is invalid. Please check the errors.');
+      return;
+    }
 
     this.meetingService.addMeeting(formatedData).subscribe((resp) => {
       console.log(resp);

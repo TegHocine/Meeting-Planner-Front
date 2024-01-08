@@ -10,11 +10,17 @@
           formControlName="startTime"
           required
         />
+        @if(startTime?.invalid){
+        <mat-error>Start Time is required</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>End Time</mat-label>
         <input matInput #input type="time" formControlName="endTime" required />
+        @if(endTime?.invalid){
+        <mat-error>End Time is required</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -27,6 +33,9 @@
           formControlName="nbrPeople"
           required
         />
+        @if(nbrPeople?.invalid){
+        <mat-error>Number of people is required</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -37,6 +46,9 @@
           <mat-option value="RS">RS</mat-option>
         </mat-select>
         <mat-label> Meeting type </mat-label>
+        @if(type?.invalid){
+        <mat-error>Type is required</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -52,6 +64,9 @@
           [for]="picker"
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        @if(date?.invalid){
+        <mat-error>Date is required</mat-error>
+        }
       </mat-form-field>
     </div>
 
