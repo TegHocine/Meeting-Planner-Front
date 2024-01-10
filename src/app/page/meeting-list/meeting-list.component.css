@@ -1,0 +1,5 @@
+.room-table-container {
+  overflow: scroll;
+  padding-block: 2rem;
+  padding-inline: 0.25rem;
+}
