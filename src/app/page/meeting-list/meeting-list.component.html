@@ -1,5 +1,9 @@
-<div class="room-table-container">
+<div class="container">
   @if (meetings.data) {
-  <app-room-table [dataSource]="meetings.data"></app-room-table>
+  <div class="table-container">
+    <app-room-table [dataSource]="meetings.data"></app-room-table>
+  </div>
+
+  <app-pagination></app-pagination>
   }
 </div>

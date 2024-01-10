@@ -1,5 +1,8 @@
-.room-table-container {
-  overflow: scroll;
-  padding-block: 2rem;
-  padding-inline: 0.25rem;
+.container {
+}
+.table-container {
+  padding-inline: 2rem;
+  padding-top: 0.5rem;
+  height: 70vh;
+  overflow-y: scroll;
 }
