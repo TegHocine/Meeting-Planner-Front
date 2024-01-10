@@ -3,16 +3,26 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MeetingComponent, HttpClientModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MeetingComponent,
+    HttpClientModule,
+    HeaderComponent,
+  ],
+  styleUrl: './app.component.css',
   template: `
     <main class="main">
-      <app-meeting> </app-meeting>
+      <app-header></app-header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
     </main>
-    <router-outlet></router-outlet>
   `,
 })
 export class AppComponent {}
