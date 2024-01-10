@@ -11,7 +11,6 @@ import { MatTableModule } from '@angular/material/table';
 })
 export class RoomTableComponent {
   displayedColumns: string[] = [
-    'id',
     'startTime',
     'endTime',
     'date',

@@ -10,16 +10,21 @@
           formControlName="startTime"
           required
         />
-        @if(startTime?.invalid){
+        @if(startTime?.hasError('required')){
         <mat-error>Start Time is required</mat-error>
+        } @if(startTime?.hasError('timeRange') &&
+        !startTime?.hasError('required')){
+        <mat-error>Start Time must be between 08:00 and 19:00.</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>End Time</mat-label>
         <input matInput #input type="time" formControlName="endTime" required />
-        @if(endTime?.invalid){
+        @if(endTime?.hasError('required')){
         <mat-error>End Time is required</mat-error>
+        } @if(endTime?.hasError('timeRange') && !endTime?.hasError('required')){
+        <mat-error>Start Time must be between 08:00 and 19:00.</mat-error>
         }
       </mat-form-field>
 
@@ -57,6 +62,7 @@
           matInput
           [matDatepicker]="picker"
           formControlName="date"
+          [min]="minDate"
           required
         />
         <mat-datepicker-toggle
@@ -75,8 +81,8 @@
     </div>
   </form>
   <div class="room-table-container">
-    @if (data) {
-    <app-room-table [dataSource]="[data]"></app-room-table>
+    @if (meeting.data) {
+    <app-room-table [dataSource]="[meeting.data]"></app-room-table>
     }
   </div>
 </div>

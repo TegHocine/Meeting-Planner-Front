@@ -12,7 +12,7 @@
 }
 
 .example-form-fields {
-  gap: 1rem;
+  gap: 1.2rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   place-items: center;
@@ -27,5 +27,6 @@
 
 .room-table-container {
   overflow: scroll;
-  padding: 2rem;
+  padding-block: 2rem;
+  padding-inline: 0.25rem;
 }

@@ -1,6 +1,9 @@
 import { RoomTableComponent } from '@/components/room-table/room-table.component';
 import { MeetingService } from '@/service/meeting.service';
 import { MeetingType } from '@/types/meetingType';
+import { Request } from '@/utils/Request';
+import { formatDate } from '@/utils/dates';
+import { timeRangeValidator } from '@/validators/validateTime';
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import {
@@ -40,23 +43,22 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class MeetingComponent {
   constructor(private meetingService: MeetingService) {}
+  minDate = new Date();
   formData = new FormGroup({
-    startTime: new FormControl('', [Validators.required]),
-    endTime: new FormControl('', [Validators.required]),
+    startTime: new FormControl('', [
+      Validators.required,
+      timeRangeValidator('startTime'),
+    ]),
+    endTime: new FormControl('', [
+      Validators.required,
+      timeRangeValidator('endTime'),
+    ]),
     date: new FormControl(new Date(), [Validators.required]),
     nbrPeople: new FormControl(0, [Validators.required, Validators.min(2)]),
     type: new FormControl('', [Validators.required]),
   });
 
-  data: MeetingType | null = null;
-
-  formatDate(date: Date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  }
+  meeting = new Request<MeetingType>();
 
   get startTime() {
     return this.formData.get('startTime');
@@ -82,21 +84,18 @@ export class MeetingComponent {
     const formatedData = {
       startTime: this.startTime?.value ?? '',
       endTime: this.endTime?.value ?? '',
-      date: this.formatDate(this.date?.value ?? new Date()),
+      date: formatDate(this.date?.value ?? new Date()),
       nbrPeople: this.nbrPeople?.value ?? 0,
       type: this.type?.value ?? '',
     };
 
-    console.log(this.startTime?.value);
+    console.log(this.startTime?.hasError('startTime'));
 
     if (this.formData.invalid) {
       console.log('Form is invalid. Please check the errors.');
       return;
     }
 
-    this.meetingService.addMeeting(formatedData).subscribe((resp) => {
-      console.log(resp);
-      this.data = resp;
-    });
+    this.meeting.use(this.meetingService.addMeeting(formatedData));
   }
 }
