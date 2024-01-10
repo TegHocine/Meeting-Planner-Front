@@ -1,3 +1,4 @@
+import { PaginationResponse } from '@/types/global';
 import { MeetingType } from '@/types/meetingType';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -25,5 +26,19 @@ export class MeetingService {
   }
   getMeeting(): Observable<MeetingType[]> {
     return this.http.get<MeetingType[]>(`http://localhost:8080/api/v1/meeting`);
+  }
+  getMeetingPagination(
+    page = 1,
+    size = 10
+  ): Observable<PaginationResponse<MeetingType>> {
+    return this.http.get<PaginationResponse<MeetingType>>(
+      `http://localhost:8080/api/v1/meeting/pagination`,
+      {
+        params: {
+          page,
+          size,
+        },
+      }
+    );
   }
 }

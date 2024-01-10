@@ -1,9 +1,13 @@
 <div class="container">
-  @if (meetings.data) {
+  @if (meetings.data && meetings.data.page) {
   <div class="table-container">
-    <app-room-table [dataSource]="meetings.data"></app-room-table>
+    <app-room-table [dataSource]="meetings.data.page"></app-room-table>
   </div>
 
-  <app-pagination></app-pagination>
+  <app-pagination
+    [length]="meetings.data.totalItems"
+    [pageSize]="pageSize"
+    (pageEvent)="handlePageEvent($event)"
+  ></app-pagination>
   }
 </div>
